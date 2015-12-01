@@ -9,10 +9,9 @@ import java.util.*;
  * Created by no_pain_no_code on 2015. 11. 29..
  * 로그 분석 결과의 자료구조와 서식을 만듦니다.
  */
-public class LogFormatter implements Formatter<Log> {
+public class LogFormatter implements Formatter {
 
     private final static int RANK_COUNT = 3;
-    private Map<Status, List<Log>> logMap = new HashMap<>();
 
     /**
      * Comparator 인터페이스를 상속받아 계산로직에 사용한다.
@@ -29,7 +28,7 @@ public class LogFormatter implements Formatter<Log> {
      * @return
      */
     @Override
-    public String doFormat() {
+    public String doFormat(Map<Status, List<Log>> logMap) {
 
         List<Log> okLogs = logMap.get(Status.OK);
 
@@ -88,7 +87,9 @@ public class LogFormatter implements Formatter<Log> {
             }
         });
 
-        String maxApiKey = Collections.max(urlApiCountMap.entrySet(), comparator).getKey();
+        List<Map.Entry<String, Integer>> list = new LinkedList<>(urlApiCountMap.entrySet());
+        list.sort(comparator);
+        String maxApiKey = list.get(0).getKey();
 
         return maxApiKey;
     }
@@ -160,18 +161,6 @@ public class LogFormatter implements Formatter<Log> {
         }
 
         return countMap;
-    }
-
-    /**
-     * Log Value 를 추가합니다.
-     * @param value
-     */
-    public void addLog(Log value) {
-
-        Status key = value.getStatus();
-        List<Log> logs = logMap.getOrDefault(key, new ArrayList<>());
-        logs.add(value);
-        logMap.put(key, logs);
     }
 
     /**
