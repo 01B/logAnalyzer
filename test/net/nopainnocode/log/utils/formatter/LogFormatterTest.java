@@ -50,8 +50,7 @@ public class LogFormatterTest {
         + "[200][http://apis.daum.net/search/news?apikey=fqwk&q=daum][IE][2012-06-10 08:09:10]";
 
         //when
-        logParser.parse(testStr, formatter);
-        String formattingStr = formatter.doFormat();
+        String formattingStr = formatter.doFormat(logParser.parse(testStr));
 
         //then
 
