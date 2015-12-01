@@ -1,7 +1,5 @@
 package net.nopainnocode.log.io;
 
-import net.nopainnocode.log.utils.formatter.Formatter;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -14,20 +12,14 @@ import java.io.IOException;
 public class LogWriter {
 
     private final static String OUTPUT_LOG = "output.log";
-    private String path;
 
-    public LogWriter(String path) {
-        this.path = path;
-    }
-
-    public boolean writeLog(Formatter formatter) {
+    public boolean writeLog(String path, String formmattedStr) {
 
         boolean result = false;
-        String formmattingStr = formatter.doFormat();
 
         // File outputStream
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(new File(path + OUTPUT_LOG)))) {
-            writer.write(formmattingStr);
+            writer.write(formmattedStr);
             result = true;
         } catch (IOException e) {
             e.printStackTrace();
