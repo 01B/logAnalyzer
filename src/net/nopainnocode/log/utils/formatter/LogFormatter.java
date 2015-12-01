@@ -14,7 +14,7 @@ public class LogFormatter implements Formatter {
     private final static int RANK_COUNT = 3;
 
     /**
-     * Comparator 인터페이스를 상속받아 계산로직에 사용한다.
+     * Comparator 를 구현하여 sort 작업에 사용한다.
      */
     private Comparator<Map.Entry<String, Integer>> comparator = new Comparator<Map.Entry<String, Integer>>() {
         @Override
