@@ -1,7 +1,16 @@
 package net.nopainnocode.log;
 
+import net.nopainnocode.log.domain.Log;
+import net.nopainnocode.log.domain.type.Status;
 import net.nopainnocode.log.io.LogReader;
 import net.nopainnocode.log.io.LogWriter;
+import net.nopainnocode.log.utils.formatter.Formatter;
+import net.nopainnocode.log.utils.formatter.LogFormatter;
+import net.nopainnocode.log.utils.parser.LogParser;
+import net.nopainnocode.log.utils.parser.Parser;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by no_pain_no_code on 2015. 11. 29..
@@ -9,22 +18,19 @@ import net.nopainnocode.log.io.LogWriter;
  */
 public class LogAnalyzer {
 
-    private String path;
-
-    private LogReader logReader;
-    private LogWriter logWriter;
-
-    public LogAnalyzer(String path) {
-        this.path = path;
-        this.logReader = new LogReader(path);
-        this.logWriter = new LogWriter(path);
-    }
-
     /**
      * 로그의 정보를 읽어 분석결과를 출력합니다.
      * @return
      */
-    public boolean analyze() {
-        return logWriter.writeLog(logReader.readLog());
+    public boolean analyze(String path) {
+
+        Parser parser = new LogParser<Status, List<Log>>();
+        Formatter formatter = new LogFormatter();
+
+        String inputLogStr = new LogReader().readLog(path);
+        Map<Status, List<Log>> logMaps = parser.parse(inputLogStr.toString());
+        String formattedStr = formatter.doFormat(logMaps);
+
+        return new LogWriter().writeLog(path, formattedStr);
     }
 }
