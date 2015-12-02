@@ -18,14 +18,18 @@ import java.util.Map;
  */
 public class LogAnalyzer {
 
+    private Parser parser;
+    private Formatter formatter;
+
+    public LogAnalyzer(Parser parser, Formatter formatter){
+        this.parser = parser;
+        this.formatter = formatter;
+    }
     /**
      * 로그의 정보를 읽어 분석결과를 출력합니다.
      * @return
      */
     public boolean analyze(String path) {
-
-        Parser parser = new LogParser<Status, List<Log>>();
-        Formatter formatter = new LogFormatter();
 
         String inputLogStr = new LogReader().readLog(path);
         Map<Status, List<Log>> logMaps = parser.parse(inputLogStr.toString());
