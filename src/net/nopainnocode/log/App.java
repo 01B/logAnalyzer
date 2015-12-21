@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class App {
     public static void main(String[] args) {
-        //String path = "/Users/no_pain_no_code/Documents/dkTechinLog/";
         String path = "";
         Parser parser = new LogParser<Status, List<Log>>();
         Formatter formatter = new LogFormatter();
